@@ -18,11 +18,11 @@ int main()
 	cin >> tmp; 
 	is_auto = (tmp != 0);
 	while (nn < 1 || nn >20) {
-		cout << "Veuillez entrer le nombre de boule noire : "; //Loop that ask valid amount of balls
+		cout << "Veuillez entrer le nombre de boule noire : "; //Loop that ask a valid amount of balls
 		cin >> nn;
 		cout << endl;
 	}
-	while (nv < 1 || nv > 20) { //Loop that as valid amount of balls
+	while (nv < 1 || nv > 20) { //Loop that ask a valid amount of balls
 		cout << "Veuillez entrer le nombre de boule verte : ";
 		cin >> nv;
 		cout << endl;
