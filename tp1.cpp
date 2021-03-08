@@ -11,27 +11,28 @@ int main()
 {
 	bool is_auto = true;
 	srand(time(0)); //random seed
-	int nn = 0; //Nombre de boule noire
-	int nv = 0; //Nombre de boule verte
-	cout << "Voulez vous activer la selection automatique ? Entrez 0 pour non et 1 ou autre chiffre pour oui !" << endl; //for fun
+	int nn = 0, nv = 0, nt = 0; //Nombre de boule noire, Nombre de boule verte
+	cout << "Voulez vous activer la selection automatique ? Entrez 0 pour non et 1 ou autre chiffre pour oui !" << endl; //To select weither it should be automatic or not
 	int tmp; //Idk if it's necessary
 	cin >> tmp; 
 	is_auto = (tmp != 0);
-	while (nn < 1 || nn >20) {
+	while (nn < 1 || nn >19) {
 		cout << "Veuillez entrer le nombre de boule noire : "; //Loop that ask valid amount of balls
 		cin >> nn;
 		cout << endl;
 	}
-	while (nv < 1 || nv > 20) { //Loop that as valid amount of balls
+	while (nv < 1 || nv > 20 - nn) { //Loop that as valid amount of balls
 		cout << "Veuillez entrer le nombre de boule verte : ";
 		cin >> nv;
 		cout << endl;
 	}
-	int nt = nn + nv; //calculate the total amount of balls
+	nt = nn + nv; //calculate the total amount of balls
+	cout << "Il y a " << nn << " boules noires," << "\n" << nv << " boules vertes \net donc " << nt << " boules au total." << endl;
 	for (int l = nt; l > 1; l--) { //loop that will itterate a given number of times proportional to the amount of balls
 		gameloop(nn, nv, nt, is_auto); //Function working with pointeurs so that we can edit the value
 	}
 	cout << "Il reste uniquement une boule " << getColorFromCode(nv == 0) << endl; //Only to tell the final balls
+	system("pause");
 	return EXIT_SUCCESS;
 }
 //The code call when it loops it could be put in the loop but it's there to increase visibility not efficiency
@@ -46,7 +47,7 @@ void gameloop(int &nn, int &nv, int &nt, bool is_rand) {
 	else {
 		nv++;
 	}
-	cout << "Vous avez tirer une boule " << getColorFromCode(fPick) << " et une boule " << getColorFromCode(sPick) << ". Donc une boule " << getColorFromCode((fPick == sPick) ? 1 : 0) << " a été ajoutée." << endl; //Long line to display the picked colors and the result
+	cout << "Vous avez tirer une boule " << getColorFromCode(fPick) << " et une boule " << getColorFromCode(sPick) << ". Donc une boule " << getColorFromCode((fPick == sPick) ? 1 : 0) << " a \x82" <<"t\x82 ajout\x82" <<"e." << endl; //Long line to display the picked colors and the result
 }
 //This is the logic behind the pick. This function has been created to avoid redundancy and to minimize the amount of lines.
 int askPickBall(int &nn, int &nv, int &nt, bool is_rand) {
@@ -70,7 +71,6 @@ int askPickBall(int &nn, int &nv, int &nt, bool is_rand) {
 		return input;
 	}	
 }
-//A bit for fun because it can be replaced by code ? "Noire" : "Verte". But it is there to avoid repetition as always.
 string getColorFromCode(int code) {
 	switch (code) {
 	case 0: return "Verte";
