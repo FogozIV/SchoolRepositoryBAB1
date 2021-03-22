@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+
 using namespace std;
 int askNumber(string sentence, int min, int max, int tries=4);
 void printTab(int tab[], int size);
@@ -41,13 +42,18 @@ int main()
 			break;
 		case 4:
 			cout << "Veuillez remplir cette matrice de caractere : " << endl;
-			min = SCHAR_MAX;
+            cout << "tab[" << 0 << "]" << "[" << 0 << "]" << " ?= ";
+			cin >> matrixChar[0][0];
+            min = matrixChar[0][0];
 			for (int col = 0; col < size; col++) {
 				for (int row = 0; row < size; row++) {
+                    if(col == 0 && row == 0){
+                        continue;
+                    }
 					cout << "tab[" << col << "]" << "[" << row << "]" << " ?= ";
 					cin >> matrixChar[col][row];
 					if (min > matrixChar[col][row]) {
-						min = matrixChar[col][col];
+						min = matrixChar[col][row];
 					}
 				}
 			}
@@ -56,6 +62,8 @@ int main()
 			break;
 		case 5:
 			cout << "Veuillez remplir cette matrice d'entier : " << endl;
+            cout<< "Le tableau est représenté sous la forme tab[col][row]" <<endl;
+            cout << "Vous entrez donc les données lignes par lignes et non colonne par colonne" << endl;
 			for (int col = 0; col < size; col++) {
 				tabInteger[col] = 0;
 				for (int row = 0; row < size; row++) {
@@ -101,7 +109,7 @@ int askUserFillTab(int tab[], int size) {
 
 string askUserFillStringTab(string tab[], int size) {
 	string max = "";
-	cout << "Veuillez remplir ce tableau de caractère" << endl;
+	cout << "Veuillez remplir ce tableau de mots" << endl;
 	for (int i = 0; i < size; i++) {
 		cout << "tab[" << i << "] ?= ";
 		cin >> tab[i];
