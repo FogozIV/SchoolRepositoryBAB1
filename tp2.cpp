@@ -76,20 +76,6 @@ int main()
 			printMatrix(matrixChar, size);
 			cout << "Le plus petit caractere est : " << min << endl;
 			break;
-		case 5:
-			cout << "Veuillez remplir cette matrice d'entier : " << endl;
-            cout<< "Le tableau est représenté sous la forme tab[col][row]" <<endl;
-            cout << "Vous entrez donc les données lignes par lignes et non colonne par colonne" << endl;
-			for (int col = 0; col < size; col++) {
-				tabInteger[col] = 0;
-				for (int row = 0; row < size; row++) {
-					cout << "tab[" << col << "]" << "[" << row << "]" << " ?= ";
-					cin >> matrixInteger[col][row];
-					tabInteger[col] += matrixInteger[col][row];
-				}
-			}
-			printTab<int>(tabInteger, size);
-			break;
 		default:
 			cout << "[ERROR] Trop de tentative infructueuse !" <<endl;
 			system("pause");
