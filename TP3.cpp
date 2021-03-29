@@ -75,7 +75,7 @@ int main()
 			cout << "Et la moyenne est : " <<(float)calculateSum<int>(tabInteger, size) / size << endl;
 			break;
 		case 3:
-			askUserFillTab(tabString, size, "Veuillez remplir ce tableau de " + to_string(size) + " mots/caractères") ;
+			askUserFillTab<string>(tabString, size, "Veuillez remplir ce tableau de " + to_string(size) + " mots/caractères") ;
 			printTab<string>(tabString, size);
 			cout << "Le maximum est : " << compare<string>(tabString, size, [](string a, string b) -> string {if (a > b) return a; else return b; }) << endl;
 			break;
