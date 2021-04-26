@@ -189,7 +189,7 @@ void displayProduct(Product p) {
 
 Product askProduct() {
     Product p;
-    cout << "Veuillez entrer le nom du produit : "; //not working with spaces
+    cout << "Veuillez entrer le nom du produit : "; //now working with spaces
     cin.ignore();
     getline(cin, p.name);
     //cin >> p.name;
