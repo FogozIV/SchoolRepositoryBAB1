@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <locale>
 
 using namespace std;
 const int MAX_BALL = 20;
@@ -16,7 +17,7 @@ struct Robot{
     int NBALL = 0;
     int score = 0;
     string name = "V";
-    char penalizingBall = 'R';
+    char notPenalizingBall = 'R';
     bool calculated = false;
 };
 
@@ -38,11 +39,14 @@ void retrieveRobot(Robot robots[], int &numberRobot, int index);
 
 void removeFirstScore(Robot robots[], int numberRobot);
 
+void calculateBlackBalls(Robot robots[], int numberRobot);
+
 int main(){
     int amountRobot = 0; //for now we will lie about that but we could just use one question to change this size... but when there is 2 it complicates things because we have to know if the second and the first are added
     Robot robots[MAX_ROBOT];
     int choice;
     Robot r;
+    setlocale(LC_ALL, "fra");
     while(1){
         showMenu();
         cout << "Que voulez vous faire ? ";
@@ -61,12 +65,12 @@ int main(){
                 affichage(robots, amountRobot);
                 break;
             case 3:
-                calculatePoint(robots, amountRobot);
-                affichage(robots, amountRobot);
+                calculateBlackBalls(robots, amountRobot);
                 break;
             case 4: 
                 r = retrieveWinner(robots, amountRobot);
                 cout << "Le(s) robot " << r.name << " a(ont) eu le score " << r.score << endl;
+                affichage(robots, amountRobot);
                 break;
             case 5: 
                 removeFirstScore(robots, amountRobot);
@@ -125,6 +129,7 @@ void showMenu(){
 }
 
 Robot retrieveWinner(Robot robots[], int amountRobot){
+    calculatePoint(robots[0]);
     Robot max = robots[0];
     bool equiv = false;
     string equivs = robots[0].name;
@@ -155,7 +160,7 @@ void calculatePoint(Robot &robot){
     robot.score = 0;
     for(int i = 0; i< robot.NBALL; i++){
         Ball b = robot.balls[i];
-        robot.score += ((b.color == robot.penalizingBall || b.color == 'N') ? -1 : 1) * b.point;
+        robot.score += ((b.color == robot.notPenalizingBall) ? 1 : -1) * b.point;
     }
 }
 
@@ -187,14 +192,16 @@ void askRobot(Robot &robot){
         cout << "Une balle de couleur " << b.color << " et de score " << b.point << " a bien été enregistrée !" << endl; 
         robot.balls[i] = b;
     }
-    cout << "Quelle est la couleur de la balle pénalisante du robot ? (en plus de la noire) ";
-    cin >> robot.penalizingBall;
+    cout << "Quelle est la couleur de la balle que le robot doit ramasser ? ";
+    cin >> robot.notPenalizingBall;
 }
 
 void affichage(Robot r){
     cout << "Robot : " + r.name << endl;
+
     if(r.calculated)
         cout << "Il possède " << r.score << " points" << endl;
+    cout << "Il y a " << r.NBALL << " balles dans ce robot" << endl;
     for(int i =0; i < r.NBALL; i++){
         cout << setw(2) << r.balls[i].color << " "; 
     }
@@ -203,12 +210,22 @@ void affichage(Robot r){
         cout << setw(2) << r.balls[i].point << " ";
     }
     cout << endl;
-    cout << "Balle pénalisante : " << r.penalizingBall << endl;
+    cout << "Balle à ramasser : " << r.notPenalizingBall << endl;
 }
 
 void affichage(Robot robots[], int amountRobot){
     for(int i = 0; i< amountRobot; i++){
         affichage(robots[i]);
         cout << "\n" << endl; // 2\n
+    }
+}
+void calculateBlackBalls(Robot robots[], int numberRobot){
+    for(int i =0; i < numberRobot; i++){
+        int blackBallAmount = 0;
+        for(int j =0; j < robots[i].NBALL; j++){
+            if(robots[i].balls[j].color == 'N')
+                blackBallAmount+=1;
+        }
+        cout << "Le robot : " << robots[i].name << " possède " << blackBallAmount << " boules noires !" << endl;
     }
 }
