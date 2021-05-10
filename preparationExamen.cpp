@@ -42,7 +42,7 @@ void removeFirstScore(Robot robots[], int numberRobot);
 void calculateBlackBalls(Robot robots[], int numberRobot);
 
 int main(){
-    int amountRobot = 0; //for now we will lie about that but we could just use one question to change this size... but when there is 2 it complicates things because we have to know if the second and the first are added
+    int amountRobot = 0; 
     Robot robots[MAX_ROBOT];
     int choice;
     Robot r;
