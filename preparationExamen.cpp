@@ -6,6 +6,7 @@
 using namespace std;
 const int MAX_BALL = 20;
 const int MAX_ROBOT = 20;
+const char colors[] = {'N','B','R'};
 
 struct Ball{
     char color = 'N';
@@ -40,6 +41,8 @@ void retrieveRobot(Robot robots[], int &numberRobot, int index);
 void removeFirstScore(Robot robots[], int numberRobot);
 
 void calculateBlackBalls(Robot robots[], int numberRobot);
+
+bool isColor(char c);
 
 int main(){
     int amountRobot = 0; 
@@ -184,7 +187,7 @@ void askRobot(Robot &robot){
             cout << "Quelle est la couleur de la balle " << i+1 << "? ";
             cin >> b.color;
 
-        }while(b.color != 'N' && b.color != 'R' && b.color != 'B');
+        }while(!isColor(b.color));
         if(b.color != 'N'){
             cout << "Quelle est la valeur de la balle " << i + 1 << "? ";
             cin >> b.point;
@@ -192,8 +195,10 @@ void askRobot(Robot &robot){
         cout << "Une balle de couleur " << b.color << " et de score " << b.point << " a bien été enregistrée !" << endl; 
         robot.balls[i] = b;
     }
-    cout << "Quelle est la couleur de la balle que le robot doit ramasser ? ";
-    cin >> robot.notPenalizingBall;
+    do{
+        cout << "Quelle est la couleur de la balle que le robot doit ramasser ? ";
+        cin >> robot.notPenalizingBall;
+    }while(!isColor(robot.notPenalizingBall));
 }
 
 void affichage(Robot r){
@@ -228,4 +233,13 @@ void calculateBlackBalls(Robot robots[], int numberRobot){
         }
         cout << "Le robot : " << robots[i].name << " possède " << blackBallAmount << " boules noires !" << endl;
     }
+}
+
+bool isColor(char c){
+    for(char a : colors){
+        if(a == c){
+            return true;
+        }
+    }
+    return false;
 }
